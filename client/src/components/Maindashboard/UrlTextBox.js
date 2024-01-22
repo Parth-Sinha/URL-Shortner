@@ -17,7 +17,7 @@ function UrlTextBox({
                 <div className="w-full justify-center items-center gap-5 flex">
                     <div className="text-center text-gray-300 text-xl font-light font-['Font Awesome 6 Pro'] leading-7" hidden = {isLinkhidden}>link</div>
                     <div className="w-full justify-start items-center gap-[5px] flex">
-                        <input className="w-full text-gray-300 border-none bg-transparent select-none bg-gray-900 rounded-[48px] text-base font-light font-['Inter'] leading-7 " type="text" name='linkInput' placeholder='https://www.google.com' />
+                        <input className="w-full text-gray-300 border-none bg-transparent select-none bg-gray-900 rounded-[48px] text-base font-light font-['Inter'] leading-7 " type="text" name='linkInput' placeholder='https://www.google.com' style={{outline:"none"}}/>
                     </div>
                 </div>
             </div>
