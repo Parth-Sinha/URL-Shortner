@@ -19,6 +19,9 @@ function MainDashboard() {
   const handleLogoClick = () => {
     navigate('/')
   }
+  const handleWorkspaceClick = () => {
+    navigate('/workspace')
+  }
 
   return (
     <>
@@ -32,6 +35,9 @@ function MainDashboard() {
               </div>
               <div className="h-[60px] pl-[25px] pr-[25.05px] py-[21px] bg-blue-700 rounded-[48px] shadow border border-blue-700 justify-center items-center flex">
                 <button className="text-center text-white text-base font-semibold font-['Inter'] leading-[18px]" onClick={handleRegisterClick}>Register Now</button>
+              </div>
+              <div className="h-[60px] pl-[25px] pr-[25.05px] py-[21px] bg-blue-700 rounded-[48px] shadow border border-blue-700 justify-center items-center flex">
+                <button className="text-center text-white text-base font-semibold font-['Inter'] leading-[18px]" onClick={handleWorkspaceClick}>Worspace</button>
               </div>
             </div>
           </div>
