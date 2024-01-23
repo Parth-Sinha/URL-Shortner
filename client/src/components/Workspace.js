@@ -2,6 +2,8 @@ import React from "react";
 import UrlTextBox from "./Maindashboard/UrlTextBox";
 import Urls from "./Urls";
 import TeamList from "./TeamList";
+import GoUpArrow from "./GoUpArrow/GoUpArrow";
+
 const Workspace = () => {
 
   function handleUserDropdown(){
@@ -9,12 +11,17 @@ const Workspace = () => {
     elem.classList.toggle("hidden");
   }
 
+
+
   return (
     <div className="bg-[#121212] text-white pb-2">
 
+      {/* top-arrow */}
+     <GoUpArrow />
+
 
       {/* navbar */}
-      <div className="flex justify-between py-2 pl-4 pr-[5%] items-center">
+      <div className="flex justify-between py-2 pl-4 pr-[5%] items-center sticky top-0 bg-[#121212] z-10">
         <div className="text-center text-cyan-500 text-[2.307rem] font-extrabold font-['Inter']">Slinkly</div>
         <div className="flex justify-center items-center">
           <button className="mr-10 text-xl p-1.5  rounded-md bg-cyan-500 hidden sm:inline">PREMIUM</button>
