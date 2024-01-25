@@ -13,7 +13,7 @@ const Urls = () => {
         <div className="mx-[5%]">
 
 
-            <div className="flex flex-col sm:flex-row sm:justify-between p-2 pl-3 sm:p-5 text-lg rounded-md bg-green-600 sm:leading-8 items-left my-4">
+            <div className="border-t-2 p-1 flex flex-col sm:flex-row sm:justify-between sm:p-3 text-lg sm:leading-8 items-left my-0">
                 <div className="overflow-hidden">
                     <div className="text-2xl"><a href="/">https://www.slinkly.in</a></div>
                     <div><a href="/">{limitLinkLength("https://www.youtube.com/watch?v=H9M02of22z4&t=111s", 34)}</a></div>
@@ -30,7 +30,7 @@ const Urls = () => {
 
                 </div>
             </div>
-            <div className="flex flex-col sm:flex-row sm:justify-between p-2 pl-3 sm:p-5 text-lg rounded-md bg-green-600 sm:leading-8 items-left my-4">
+            <div className="border-t-2 p-1 flex flex-col sm:flex-row sm:justify-between sm:p-3 text-lg sm:leading-8 items-left my-0">
                 <div className="overflow-hidden">
                     <div className="text-2xl"><a href="/">https://www.slinkly.in</a></div>
                     <div><a href="/">{limitLinkLength("https://www.youtube.com/watch?v=H9M02of22z4&t=111s", 34)}</a></div>
@@ -47,6 +47,7 @@ const Urls = () => {
 
                 </div>
             </div>
+            
 
 
 
