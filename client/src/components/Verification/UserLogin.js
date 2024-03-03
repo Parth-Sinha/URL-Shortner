@@ -16,12 +16,20 @@ function UserLogin() {
   }
 
 
-  const handleLoginClick = () => {
-    axios.post(`http://localhost:8000/login`, user)
-    .then(res => {
-      res.status? axios.post('http://localhost:8000/workspace'): navigate('login')
-    })
-    .catch(err => console.log(err))
+  const handleLoginClick = async (event) => {
+    event.preventDefault()
+    try {
+      const response = await axios.post(`http://localhost:8000/login`, user)
+      console.log(response)
+      const accessToken = response.data.accessToken;
+      localStorage.setItem('accessToken', accessToken);     
+      const res = await axios.post('http://localhost:8000/workspace', {}, {
+        'Authorization': 'Bearer ' + accessToken,
+      })
+      console.log(res)
+    } catch (error) {
+      
+    }
   }
   
 

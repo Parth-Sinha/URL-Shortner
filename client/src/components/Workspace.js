@@ -8,10 +8,6 @@ import UrlTable from "./UrlTable";
 
 const Workspace = () => {
 
-  
-
-
-
   return (
     <div className="bg-black text-white pb-2">
 

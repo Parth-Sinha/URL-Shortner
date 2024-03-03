@@ -8,15 +8,24 @@ const UserRegister = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate()
 
-  const handleRegisterClick = () => {
+  const handleRegisterClick = (event) => {
+    event.preventDefault();
+    
     const userData = {
       fullname: fullname,
       email: email,
       password: password
-    }
+    };
+  
     axios.post('http://localhost:8000/signup', userData)
-    .catch(err => console.log(err))
-  }
+      .then(response => {
+        setTimeout(() => {
+          navigate('/login');
+        }, 1000); // 1000 milliseconds = 1 second
+      })
+      .catch(err => console.log(err));
+  };
+  
 
 
   const handleLoginClick = () => {
