@@ -1,7 +1,8 @@
 import React from 'react'
 import UrlTextBox from './UrlTextBox'
 import { useNavigate } from 'react-router-dom'
-import LinkTable from './LinkTable'
+import UrlTable from '../UrlTable'
+
 
 function MainDashboard() {
 
@@ -59,8 +60,8 @@ function MainDashboard() {
                 <div className="text-center"><span className="text-gray-300 text-sm font-light font-['Inter']">You can create </span><span className="text-pink-500 text-sm font-bold font-['Inter']">05</span><span className="text-gray-300 text-sm font-light font-['Inter']"> more links. Register  Now to enjoy Unlimited usage</span></div>
               </div>
             <div className="flex-col gap-4 flex w-full mt-24">
-              <div className=''>
-                <LinkTable />
+              <div className='text-white'>
+                <UrlTable />
               </div>
             </div>
           </div>

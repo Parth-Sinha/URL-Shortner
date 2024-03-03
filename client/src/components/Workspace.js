@@ -4,6 +4,7 @@ import Urls from "./Urls";
 import TeamList from "./TeamList";
 import GoUpArrow from "./GoUpArrow/GoUpArrow";
 import Navbar from "./Navbar";
+import UrlTable from "./UrlTable";
 
 const Workspace = () => {
 
@@ -35,7 +36,7 @@ const Workspace = () => {
       {/* urls list */}
       <div className="mt-4">
         <div className="text-4xl ml-4 mb-8">URLS</div>
-        <Urls />
+        <UrlTable />
       </div>
 
 

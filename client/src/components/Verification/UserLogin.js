@@ -1,8 +1,14 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Form } from 'react-router-dom'
 
 function UserLogin() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const user = {
+    email: email, 
+    password: password
+  }
   const navigate = useNavigate()
 
   const handleRegisterClick = () => {
@@ -11,8 +17,13 @@ function UserLogin() {
 
 
   const handleLoginClick = () => {
-    navigate('/login')
+    axios.post(`http://localhost:8000/login`, user)
+    .then(res => {
+      res.status? axios.post('http://localhost:8000/workspace'): navigate('login')
+    })
+    .catch(err => console.log(err))
   }
+  
 
   const handleLogoClick = () => {
     navigate('/')
@@ -39,13 +50,13 @@ function UserLogin() {
             <form action=''>
               <div className="p-3 mt-[3rem]">
                 <span className="text-cyan-300 text-xl font-mono">Email ID</span>
-                <div className=" mt-2 mr-0"><input type='text' className="bg-white/20 text-cyan-100 text-base font-light px-2 font-['Inter'] leading-7 rounded-lg w-[95%] h-9"></input></div>
+                <div className=" mt-2 mr-0"><input type='text' className="bg-white/20 text-cyan-100 text-base font-light px-2 font-['Inter'] leading-7 rounded-lg w-[95%] h-9" onChange={e => setEmail(e.target.value)}></input></div>
               </div>
               <div className="p-3 mt-2">
                 <span className="text-cyan-300 text-xl font-mono">Password</span>
-                <div className=" mt-2 mr-0"><input type='password' className="bg-white/20 text-cyan-100 text-base font-light px-2 font-['Inter'] leading-7 rounded-lg w-[95%] h-9"></input></div>
+                <div className=" mt-2 mr-0"><input type='password' className="bg-white/20 text-cyan-100 text-base font-light px-2 font-['Inter'] leading-7 rounded-lg w-[95%] h-9" onChange={e => setPassword(e.target.value)}></input></div>
               </div>
-              <button className="text-white bg-cyan-500 py-1 px-[6rem] rounded-md align-middle block mx-auto mt-[4rem]"> Login </button>
+              <button className="text-white bg-cyan-500 py-1 px-[6rem] rounded-md align-middle block mx-auto mt-[4rem]" onClick={handleLoginClick}> Login </button>
             </form>
           </div>
         </div>
