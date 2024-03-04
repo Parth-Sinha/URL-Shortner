@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, "Name is Required"],
     },
+    isPremium:{
+        type: Boolean,
+        default: false,
+    },
     imgurl:{
         type: String,
         default: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3AWindows_10_Default_Profile_Picture.svg&psig=AOvVaw3oR1UrugU4vFGUVq_NtyDE&ust=1709265160464000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCNjmm4jTz4QDFQAAAAAdAAAAABAF'

@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { redirect, useNavigate } from 'react-router-dom'
 
 function UserLogin() {
-  const [email, setEmail] = useState("");
+  const [email
+    , setEmail] = useState("");
   const [password, setPassword] = useState("");
   const user = {
     email: email, 
@@ -20,15 +21,28 @@ function UserLogin() {
     event.preventDefault()
     try {
       const response = await axios.post(`http://localhost:8000/login`, user)
-      console.log(response)
+      console.log(response.request.status)
+
       const accessToken = response.data.accessToken;
       localStorage.setItem('accessToken', accessToken);     
-      const res = await axios.post('http://localhost:8000/workspace', {}, {
-        'Authorization': 'Bearer ' + accessToken,
-      })
-      console.log(res)
+      console.log('haha')
+      try {
+        const data = await axios.post('http://localhost:8000/workspace', {}, {
+          headers: {
+            'Authorization': `${accessToken}`
+          }
+        })
+        console.log(data.data.status)
+        data.data.status ? navigate('/workspace'): redirect('/login')
+        console.log("data is " , data)
+        
+        
+      } catch (error) {
+        console.log(error)
+      }
+      console.log('hehe')
     } catch (error) {
-      
+      console.log(error)
     }
   }
   

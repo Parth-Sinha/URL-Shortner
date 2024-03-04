@@ -10,6 +10,9 @@ const UrlSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    personId: {
+        type: String,
+    },
     visitedHistory: [{timestamps: {type: Number}}],
 
 }, 

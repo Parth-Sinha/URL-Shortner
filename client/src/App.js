@@ -12,6 +12,7 @@ function App() {
         <Route path='/' exact Component={MainDashboard}/>
         <Route path='/register' Component={Register} />
         <Route path='/login' Component={UserLogin} />
+        
         <Route path='/workspace' Component={Workspace} />
         <Route path='/analytics' Component={Analytics}/>
       </Routes>

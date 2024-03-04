@@ -55,6 +55,9 @@ const login_post = async(req, res)=>{
         res.status(401).json({error: 'Enter a valid email and password'})
     }
     const user = await User.findOne({ email})
+    if(!user){
+        res.status(401).json({error: 'Not a valid user'})
+    }
     const authenticate = await bcrypt.compare(password, user.password)
     if(!authenticate){
         res.status(401).json({error: 'Enter a valid email and password'})
