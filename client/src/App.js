@@ -4,6 +4,7 @@ import Register from './components/Verification/UserRegister';
 import UserLogin from './components/Verification/UserLogin'
 import Workspace from './components/Workspace'
 import Analytics from './components/Analytics/Analytics';
+import PremiumComp from './components/Premium/Premium';
 function App() {
 
   return (
@@ -15,6 +16,7 @@ function App() {
         
         <Route path='/workspace' Component={Workspace} />
         <Route path='/analytics' Component={Analytics}/>
+        <Route path='/premium' Component={PremiumComp} />
       </Routes>
     </BrowserRouter>
   );
