@@ -37,9 +37,6 @@ const signup_post = async (req, res)=>{
             email: email,
             password: password
         })    
-        const token = createJsontokens(user._id);
-        console.log(token)
-        res.cookie('jwt', token, {httponly: true, maxAge: maxAge*1000})
         res.status(201).send('Sucessfully Signed Up')
     } catch (error) {
         errors = handleErrors(error)
@@ -52,20 +49,20 @@ const login_post = async(req, res)=>{
     const {email, password} = req.body;
     console.log(email, password)
     if(!email || !password){
-        res.status(401).json({error: 'Enter a valid email and password'})
+        res.status(401).json({error: 'Enter a valid email and password', status: false})
     }
     const user = await User.findOne({ email})
     if(!user){
-        res.status(401).json({error: 'Not a valid user'})
+        res.status(401).json({error: 'Not a valid user', status: false})
     }
     const authenticate = await bcrypt.compare(password, user.password)
     if(!authenticate){
-        res.status(401).json({error: 'Enter a valid email and password'})
+        res.status(401).json({error: 'Enter a valid email and password', status: false})
     }
     const token = createJsontokens(user._id)
     res.cookie('jwt', token, {httponly: false, maxAge: maxAge*1000})
     console.log(token)
-    return res.status(201).json({accessToken: token, user: user, message: "found!"})
+    return res.status(201).json({accessToken: token, user: user, status: true})
 }
 
 module.exports = {signup_post, login_post}

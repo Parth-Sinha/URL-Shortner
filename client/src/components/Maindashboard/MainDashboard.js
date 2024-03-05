@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import UrlTextBox from './UrlTextBox'
 import { useNavigate } from 'react-router-dom'
 import UrlTable from '../UrlTable'
 
 
 function MainDashboard() {
+  const accessToken = localStorage.getItem('accessToken')
 
   const navigate = useNavigate()
 
@@ -32,20 +33,21 @@ function MainDashboard() {
       <div className="bg-[url('../src/images/background.jpg')] min-h-screen bg-cover flex flex-col">
         <div className="w-full justify-center items-center inline-flex mt-2 flex-col">
           <div className="grow shrink basis-0 self-stretch justify-between items-center inline-flex ml-4">
-            <div className="text-center text-cyan-500 text-[2.307rem] font-extrabold font-['Inter']" onClick={handleLogoClick}>Slinkly</div>
+            <div className="text-center text-cyan-500 text-[2.307rem] font-extrabold font-['Inter'] hover: cursor-pointer" onClick={handleLogoClick}>Slinkly</div>
             <div className="justify-start items-start gap-5 flex mr-4">
-              <div className="w-[7.5rem] pl-[25px] pr-[25.19px] py-[21px] bg-gray-900 rounded-[48px] shadow border border-gray-700 justify-center items-center gap-2.5 flex">
+              <button className="mr-10 text-xl p-1.5  rounded-[48px] bg-gradient-to-r from-slate-200 to-yellow-400 text-transparent bg-clip-text pl-[25px] pr-[25.05px] py-[21px] hidden sm:inline" onClick={handlePremium}>PREMIUM</button>
+              {accessToken?<div></div>: <div className="w-[7.5rem] pl-[25px] pr-[25.19px] py-[21px] bg-gray-900 rounded-[48px] shadow border border-gray-700 justify-center items-center gap-2.5 flex">
                 <button className="text-center text-white text-base font-semibold font-['Inter'] leading-[18px]" onClick={handleLoginClick}>Login</button>
-              </div>
-              <div className="h-[60px] pl-[25px] pr-[25.05px] py-[21px] bg-blue-700 rounded-[48px] shadow border border-blue-700 justify-center items-center flex">
+              </div>}
+              {accessToken? <div></div>: <div className="h-[60px] pl-[25px] pr-[25.05px] py-[21px] bg-blue-700 rounded-[48px] shadow border border-blue-700 justify-center items-center flex">
                 <button className="text-center text-white text-base font-semibold font-['Inter'] leading-[18px]" onClick={handleRegisterClick}>Register Now</button>
-              </div>
-              <div className="h-[60px] pl-[25px] pr-[25.05px] py-[21px] bg-blue-700 rounded-[48px] shadow border border-blue-700 justify-center items-center flex">
-                <button className="text-center text-white text-base font-semibold font-['Inter'] leading-[18px]" onClick={handleWorkspaceClick}>Worspace</button>
-              </div>
-              <div className="h-[60px] pl-[25px] pr-[25.05px] py-[21px] bg-blue-700 rounded-[48px] shadow border border-blue-700 justify-center items-center flex">
-                <button className="text-center text-white text-base font-semibold font-['Inter'] leading-[18px]" onClick={handlePremium}>Premium</button>
-              </div>
+              </div>}
+              
+              {accessToken?<div className="h-[60px] pl-[25px] pr-[25.05px] py-[21px] bg-blue-700 rounded-[48px] shadow border border-blue-700 justify-center items-center flex">
+                <button className="text-center text-white text-base font-semibold font-['Inter'] leading-[18px]" onClick={handleWorkspaceClick}>Dashboard</button>
+              </div>:<div></div>}
+              
+              
             </div>
           </div>
         </div>

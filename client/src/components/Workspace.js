@@ -1,22 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import UrlTextBox from "./Maindashboard/UrlTextBox";
-import Urls from "./Urls";
 import TeamList from "./TeamList";
 import GoUpArrow from "./GoUpArrow/GoUpArrow";
 import Navbar from "./Navbar";
 import UrlTable from "./UrlTable";
+import axios from "axios";
 
 const Workspace = () => {
+  const [username, setUsername] = useState('Dummy');
+  const accessToken = localStorage.getItem('accessToken')
+  useEffect(()=>{
+    const auth = async() =>{
+      const accessToken = localStorage.getItem('accessToken')
+      const response = await axios.post("http://localhost:8000/workspace", {}, {
+          headers: {
+              'Authorization': accessToken
+          }
+      })
+      setUsername(response.data.fullname)
+    };
+    auth();
+  }, [accessToken])
 
   return (
     <div className="bg-black text-white pb-2">
 
       {/* top-arrow */}
-     <GoUpArrow />
+      <GoUpArrow />
 
       {/* navbar */}
-      <Navbar/>
-      
+      <Navbar username={username} transparencyNavbar = {false}/>
 
       {/* link shortener */}
       <div className="flex justify-center mt-4">
@@ -34,14 +47,8 @@ const Workspace = () => {
         <div className="text-4xl ml-4 mb-8">URLS</div>
         <UrlTable />
       </div>
-
-
-
-
     </div>
-
-
-  )
-}
+  );
+};
 
 export default Workspace;

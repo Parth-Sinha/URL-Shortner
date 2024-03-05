@@ -29,7 +29,7 @@ connectDB(process.env.URI).then(()=>{
 app.get('/api/user',urlcontrollers.get_url)
 app.post('/api/user', urlcontrollers.post_url)
 app.delete('/:shortid', urlcontrollers.delete_url)
-app.get('/:shortid', urlcontrollers.delete_url)
+app.get('/:shortid', urlcontrollers.get_click_short_url)
 app.post('/api/user/premium', urlcontrollers.post_premium_url)
 
 

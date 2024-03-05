@@ -5,48 +5,39 @@ const {nanoid} = require('nanoid')
 
 
 const get_url = async(req, res)=>{
-    const token = req.cookies.jwt
+    const token = req.headers.authorization
+    console.log(req.headers)
     let pid = null
     if(token){
         json.verify(token, 'privateAuth', async(err, data) =>{
-            if(err){
-                res.status(401).json({status: false})
+            if(data){
+                pid = data.id
             }
-            pid = data.id
-            const user = await User.findById(data.id)
-            console.log(user)
-            if(!user){
-                res.status(401).json({status: false})
+            if(pid){
+
+                const user = await User.findById(data.id)
+                console.log(user)
+                if(!user){
+                    pid = null
+                }
             }
         })
     }
+    console.log(pid)
     const dataAvailablity = await url.find({personId: pid});
+    console.log(dataAvailablity)
     return res.json(dataAvailablity)
 }
 
 const post_url = async(req, res)=>{
     const redirectedToUrl = req.body.redirectedUrl
+    let pid = req.body.personId || null
     if(!redirectedToUrl){
         return res.status(400).send({})
     }
 
     const shortenedId = nanoid(8)
     const serverUrl = `http://localhost:${process.env.PORT}/`
-    const token = req.cookies.jwt
-    let pid = null
-    if(token){
-        json.verify(token, 'privateAuth', async (err, data) =>{
-            if(err){
-                res.status(401).json({status: false})
-            }
-            pid = data.id
-            const user = await User.findById(data.id)
-            console.log(user)
-            if(!user){
-                res.status(401).json({status: false})
-            }
-        })
-    }
     const urlObject = await url.create({
         shortUrl: serverUrl+shortenedId,
         redirectedUrl: redirectedToUrl,
@@ -58,27 +49,9 @@ const post_url = async(req, res)=>{
 const delete_url = async(req, res)=>{
     const shortId = req.params.shortid
     const serverUrl = `http://localhost:${process.env.PORT}/`
-    // We need to verify if the user is logged in or not
-    const token = req.cookies.jwt
-    let pid = null
-    if(token){
-        json.verify(token, 'privateAuth', async (err, data) =>{
-            if(err){
-                res.status(401).json({status: false})
-            }
-            pid = data.id
-            const user = await User.findById(data.id)
-            console.log(user)
-            if(!user){
-                res.status(401).json({status: false})
-            }
-        })
-    }
-    if(pid){
-        const deletedUrl=  await url.findOneAndDelete({shortUrl: serverUrl + shortId, personId: pid})
-        return res.send(deletedUrl)
-    }
-    return res.status(401).send('cannot delete')
+    console.log(shortId)
+    const deletedUrl=  await url.findOneAndDelete({shortUrl: serverUrl + shortId})
+    return res.send(deletedUrl)
 }
 
 const get_click_short_url =  async(req, res)=>{

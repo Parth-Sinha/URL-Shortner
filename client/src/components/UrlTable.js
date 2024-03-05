@@ -11,10 +11,14 @@ const UrlTable = () => {
         }
         return link;
     };
-
+    const accessToken = localStorage.getItem('accessToken')
     useEffect(() => {
       axios
-        .get("http://localhost:8000/api/user/")
+        .get("http://localhost:8000/api/user/", {
+            headers:{
+                'Authorization': `${accessToken}`
+            }
+        })
         .then(links => {setLinks(links.data)
         })
         .catch(err => console.error(err));
@@ -39,9 +43,11 @@ const UrlTable = () => {
                             window.navigator.clipboard.writeText(link.shortUrl)
                         }}><span className="m-1 "><i class="fa-solid fa-copy"></i></span>Copy<span></span></button>
                         <button className="hover:text-green-400"><span className="m-1"><i title="Edit" class="fa-solid fa-pencil"></i></span></button>
-                        <button className="hover:text-red-500" onClick={()=> axios
+                        <button className="hover:text-red-500" onClick={()=> {axios
                           .delete(`${link.shortUrl}`)
-                          .catch(err => console.error(err))}><span className="m-1"><i title="Delete" class="fa-solid fa-trash"></i></span></button>
+                          .catch(err => console.error(err))
+                        }
+                          }><span className="m-1"><i title="Delete" class="fa-solid fa-trash"></i></span></button>
                     </div>
 
                 </div>

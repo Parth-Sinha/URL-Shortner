@@ -21,7 +21,7 @@ const UserRegister = () => {
       .then(response => {
         setTimeout(() => {
           navigate('/login');
-        }, 1000); // 1000 milliseconds = 1 second
+        }, 1000);
       })
       .catch(err => console.log(err));
   };
