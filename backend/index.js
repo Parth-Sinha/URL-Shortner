@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(cors())
 app.use(cookieParser())
 app.use(cors({
-    origin: 'https://url-shortner-backend-teal.vercel.app'
+    origin: 'https://url-shortner-client-two.vercel.app/'
 }))
 // Connect to MongoDB
 
