@@ -37,7 +37,7 @@ const post_url = async(req, res)=>{
     }
 
     const shortenedId = nanoid(8)
-    const serverUrl = `http://localhost:${process.env.PORT}/`
+    const serverUrl = `https://url-shortner-backend-teal.vercel.app/`
     const urlObject = await url.create({
         shortUrl: serverUrl+shortenedId,
         redirectedUrl: redirectedToUrl,
@@ -48,7 +48,7 @@ const post_url = async(req, res)=>{
 
 const delete_url = async(req, res)=>{
     const shortId = req.params.shortid
-    const serverUrl = `http://localhost:${process.env.PORT}/`
+    const serverUrl = `https://url-shortner-backend-teal.vercel.app/`
     console.log(shortId)
     const deletedUrl=  await url.findOneAndDelete({shortUrl: serverUrl + shortId})
     return res.send(deletedUrl)
@@ -56,7 +56,7 @@ const delete_url = async(req, res)=>{
 
 const get_click_short_url =  async(req, res)=>{
     const shortId = req.params.shortid
-    const serverUrl = `http://localhost:${process.env.PORT}/`
+    const serverUrl = `https://url-shortner-backend-teal.vercel.app/`
     const foundUrl = await url.findOneAndUpdate({shortUrl: serverUrl+shortId}, {$push:{
         visitedHistory:{timestamps: Date.now()}
     }})
@@ -76,7 +76,7 @@ const post_premium_url = async(req, res) =>{
     if(!redirectedToUrl){
         return res.status(400).send("Please provide the required url")
     }
-    const serverUrl = `http://localhost:${process.env.PORT}/`
+    const serverUrl = `https://url-shortner-backend-teal.vercel.app/`
     try {
         const urlObject = await url.create({
             shortUrl: serverUrl + requestedShortUrl,
@@ -92,7 +92,7 @@ const post_premium_url = async(req, res) =>{
 const get_clicks_data = async(req, res) =>{
     console.log("inside here")
     const shortId = req.params.shortid
-    const serverUrl = `http://localhost:${process.env.PORT}/`
+    const serverUrl = `https://url-shortner-backend-teal.vercel.app/`
     console.log(shortId)
     if(!shortId){
         return res.status(400).json([])
