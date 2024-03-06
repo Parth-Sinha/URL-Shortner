@@ -6,6 +6,11 @@ const UserRegister = () => {
   const [fullname, setFullname] = useState("")
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isEmailError, setIsEmailError] = useState(false)
+  const [isNameError, setIsNameError] = useState(false)
+  const [isPasswordError, setIsPasswordError] = useState(false)
+  const [err, setErr] = useState({})
+  
   const navigate = useNavigate()
 
   const handleRegisterClick = (event) => {
@@ -23,7 +28,14 @@ const UserRegister = () => {
           navigate('/login');
         }, 1000);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        const error = err.response.data.error
+        setErr(error);
+        if(error.email)setIsEmailError(true);
+        if(error.password)setIsPasswordError(true);
+        if(error.fullname)setIsNameError(true);
+
+      });
   };
   
 
@@ -58,14 +70,17 @@ const UserRegister = () => {
               <div className="p-3 mt-[3rem]">
                 <span className="text-cyan-300 text-xl font-mono">Full Name</span>
                 <div className=" mt-2 mr-0"><input type='text' className="bg-white/20 text-cyan-100 text-base font-light px-2 font-['Inter'] leading-7 rounded-lg w-[95%] h-9" onChange={(e)=>setFullname(e.target.value)}></input></div>
+                {isNameError? <div className='text-red-500'>{err.fullname}</div>: <div></div>}
               </div>
               <div className="p-3 mt-2">
                 <span className="text-cyan-300 text-xl font-mono">Email ID</span>
                 <div className=" mt-2 mr-0"><input type='text' className="bg-white/20 text-cyan-100 text-base font-light px-2 font-['Inter'] leading-7 rounded-lg w-[95%] h-9" onChange={(e) => setEmail(e.target.value)}></input></div>
+                {isEmailError? <div className='text-red-500'>{err.email}</div>: <div></div>}
               </div>
               <div className="p-3 mt-2">
                 <span className="text-cyan-300 text-xl font-mono">Password</span>
                 <div className=" mt-2 mr-0"><input type='password' className="bg-white/20 text-cyan-100 text-base font-light px-2 font-['Inter'] leading-7 rounded-lg w-[95%] h-9" onChange={e => setPassword(e.target.value)}></input></div>
+                {isPasswordError? <div className='text-red-500'>{err.password}</div>: <div></div>}
               </div>
               <button className="text-white bg-cyan-500 py-1 px-[6rem] rounded-md align-middle block mx-auto mt-[4rem]" onClick={handleRegisterClick}> Sign Up </button>
             </form>

@@ -40,7 +40,8 @@ const signup_post = async (req, res)=>{
         res.status(201).send('Sucessfully Signed Up')
     } catch (error) {
         errors = handleErrors(error)
-        res.status(400).json({error: errors})
+        console.log(errors)
+        res.status(400).json({error: errors}) 
     }
 }
 
@@ -49,15 +50,15 @@ const login_post = async(req, res)=>{
     const {email, password} = req.body;
     console.log(email, password)
     if(!email || !password){
-        res.status(401).json({error: 'Enter a valid email and password', status: false})
+        res.status(400).json({error: 'Enter a valid email and password', status: false})
     }
     const user = await User.findOne({ email})
     if(!user){
-        res.status(401).json({error: 'Not a valid user', status: false})
+        res.status(400).json({error: 'Not a valid user', status: false})
     }
     const authenticate = await bcrypt.compare(password, user.password)
     if(!authenticate){
-        res.status(401).json({error: 'Enter a valid email and password', status: false})
+        res.status(400).json({error: 'Enter a valid email and password', status: false})
     }
     const token = createJsontokens(user._id)
     res.cookie('jwt', token, {httponly: false, maxAge: maxAge*1000})
