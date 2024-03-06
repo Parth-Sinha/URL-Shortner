@@ -17,7 +17,7 @@ const Analytics = () => {
     const fetchVisitedHistory = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/analytics/${shortid}`
+          `https://url-shortner-backend-teal.vercel.app/analytics/${shortid}`
         );
         const visitedHistory = response.data;
         setTotalClicks(visitedHistory.length)

@@ -12,7 +12,7 @@ const Workspace = () => {
   useEffect(()=>{
     const auth = async() =>{
       const accessToken = localStorage.getItem('accessToken')
-      const response = await axios.post("http://localhost:8000/workspace", {}, {
+      const response = await axios.post("https://url-shortner-backend-teal.vercel.app/workspace", {}, {
           headers: {
               'Authorization': accessToken
           }

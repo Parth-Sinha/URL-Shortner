@@ -18,7 +18,7 @@ const UrlTable = () => {
     useEffect(() => {
         const fetchlinks = ()=>{
             axios
-              .get("http://localhost:8000/api/user/", {
+              .get("https://url-shortner-backend-teal.vercel.app/api/user/", {
                   headers:{
                       'Authorization': `${accessToken}`
                   }

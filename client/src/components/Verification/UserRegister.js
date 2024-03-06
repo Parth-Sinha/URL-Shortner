@@ -22,7 +22,7 @@ const UserRegister = () => {
       password: password
     };
   
-    axios.post('http://localhost:8000/signup', userData)
+    axios.post('https://url-shortner-backend-teal.vercel.app/signup', userData)
       .then(response => {
         setTimeout(() => {
           navigate('/login');

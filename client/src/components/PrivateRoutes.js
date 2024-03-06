@@ -12,7 +12,7 @@ const PrivateRoute = () => {
       if (accessToken) {
         try {
           const response = await axios.post(
-            'http://localhost:8000/workspace',
+            'https://url-shortner-backend-teal.vercel.app/workspace',
             {},
             {
               headers: {

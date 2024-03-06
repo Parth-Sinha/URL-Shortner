@@ -16,7 +16,7 @@ function UrlTextBox({
             if (accessToken) {
                 try {
                     const response = await axios.post(
-                        'http://localhost:8000/workspace',
+                        'https://url-shortner-backend-teal.vercel.app/workspace',
                         {},
                         {
                             headers: {
@@ -50,7 +50,7 @@ function UrlTextBox({
             personId: PID
         }
         console.log(newUrl.personId, "IS THE PERSON ID")
-        fetch('http://localhost:8000/api/user/', {
+        fetch('https://url-shortner-backend-teal.vercel.app/api/user/', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

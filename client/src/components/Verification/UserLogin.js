@@ -23,7 +23,7 @@ function UserLogin() {
     event.preventDefault()
     
     try {
-      const response = await axios.post(`http://localhost:8000/login`, user)
+      const response = await axios.post(`https://url-shortner-backend-teal.vercel.app/login`, user)
       const accessToken = response.data.accessToken;
       localStorage.setItem('accessToken', accessToken);
       navigate('/workspace');

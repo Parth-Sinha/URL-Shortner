@@ -14,7 +14,7 @@ function Premium() {
         setUsername(null);
         return;
       }
-      const response = await axios.post("http://localhost:8000/workspace", {}, {
+      const response = await axios.post("https://url-shortner-backend-teal.vercel.app/workspace", {}, {
           headers: {
               'Authorization': accessToken
           }
