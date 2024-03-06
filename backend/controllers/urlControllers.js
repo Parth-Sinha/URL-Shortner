@@ -89,4 +89,20 @@ const post_premium_url = async(req, res) =>{
 
 }
 
-module.exports = {get_url, post_url, delete_url, get_click_short_url, post_premium_url}
+const get_clicks_data = async(req, res) =>{
+    console.log("inside here")
+    const shortId = req.params.shortid
+    const serverUrl = `http://localhost:${process.env.PORT}/`
+    console.log(shortId)
+    if(!shortId){
+        return res.status(400).json([])
+    }
+    const urlObj = await url.findOne({shortUrl: serverUrl + shortId })
+    if(!urlObj){
+        return res.status(400).json([])
+    }
+    const visitedHistory = urlObj.visitedHistory
+    return res.status(201).json(visitedHistory)
+}
+
+module.exports = {get_url, post_url, delete_url, get_click_short_url, post_premium_url, get_clicks_data}

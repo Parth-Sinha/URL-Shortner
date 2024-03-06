@@ -31,7 +31,7 @@ app.post('/api/user', urlcontrollers.post_url)
 app.delete('/:shortid', urlcontrollers.delete_url)
 app.get('/:shortid', urlcontrollers.get_click_short_url)
 app.post('/api/user/premium', urlcontrollers.post_premium_url)
-
+app.get('/analytics/:shortid', urlcontrollers.get_clicks_data)
 
 // Auth routes
 app.post('/signup', authcontrollers.signup_post)

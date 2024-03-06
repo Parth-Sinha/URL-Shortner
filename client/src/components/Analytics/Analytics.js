@@ -1,150 +1,127 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 import Navbar from "../Navbar";
-import BarGraph from "./BarGraph";
-import PieGraph from "./PieGraph";
 import LineGraph from "./LineGraph";
-const Analytics = () =>{
-    return (
-        <div className="bg-black text-white pb-2 min-h-screen">
 
-            <Navbar/>
+const Analytics = () => {
+  const { shortid } = useParams();
 
-            <div className="text-4xl ml-4">ANALYTICS</div>
+  const [clicksPerTime, setClicksPerTime] = useState({});
+  const [labels, setLabels] = useState([]);
+  const [data, setData] = useState([]);
+  const [activeTab, setActiveTab] = useState("5min");
+  const [totalClicks, setTotalClicks] = useState(0);
 
-            <div className=" justify-around my-4 flex flex-col items-center gap-5 sm:flex-row">
-            <div className="bg-blue-800 justify-center flex-col text-center p-3 text-2xl w-56 border-2 rounded"><div>Total Clicks</div><div>9999</div></div>
-            <div className="bg-blue-800 justify-center flex-col text-center p-3 text-2xl w-56 border-2 rounded"><div>Unique Clicks</div><div>1111</div></div>
-            </div>
+  useEffect(() => {
+    const fetchVisitedHistory = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/analytics/${shortid}`
+        );
+        const visitedHistory = response.data;
+        setTotalClicks(visitedHistory.length)
+        const newClicksPerTime = {};
 
-            <div className="flex flex-col sm:flex-row justify-evenly gap-5 items-center">
-                <div className="sm:w-2/5 w-5/6">
-                    <div className="text-2xl m-2 mt-5">Clicks by Countries</div>
-                    <div><BarGraph data = {{
-        labels: ['India', 'USA', 'UK', 'Russia', 'Singapore'],
-        datasets: [
-          {
-            label: 'Click By Countries',
-            data: [12, 19, 7, 9, 4],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
-            ],
-            borderWidth: 1,
-          },
-        ],
-      }}
-      /></div>
-                </div>
+        // Calculate clicks per time interval
+        visitedHistory.forEach(({ timestamps }) => {
+          const date = new Date(timestamps);
+          let time;
 
-                <div className="sm:w-2/5 w-5/6">
-                    <div className="text-2xl m-2 mt-5">Clicks by Cities</div>
-                    <div><BarGraph data = {{
-        labels: ['Delhi', 'Mumbai', 'New York', 'Los Angeles', 'Chennai'],
-        datasets: [
-          {
-            label: 'Click By Countries',
-            data: [12, 19, 7, 9, 4],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
-            ],
-            borderWidth: 1,
-          },
-        ],
-      }}
-      /></div>
-                </div>
-            </div>
+          // Determine time interval (hour or 5 minutes)
+          if (activeTab === "hour") {
+            time = `${date.getHours()}:00`;
+          } else if (activeTab === "5min") {
+            const min = Math.floor(date.getMinutes() / 5) * 5;
+            time = `${date.getHours()}:${min < 10 ? "0" : ""}${min}`;
+          } else {
+            time = date.toISOString().split("T")[0];
+          }
 
+          if (!newClicksPerTime[time]) {
+            newClicksPerTime[time] = 1;
+          } else {
+            newClicksPerTime[time]++;
+          }
+        });
 
+        const newLabels = Object.keys(newClicksPerTime);
+        const newData = Object.values(newClicksPerTime);
 
+        setClicksPerTime(newClicksPerTime);
+        setLabels(newLabels);
+        setData(newData);
+      } catch (err) {
+        console.log("Error: ", err);
+      }
+    };
 
-            <div className="flex flex-col sm:flex-row justify-evenly gap-5 items-center">
-                <div className="sm:w-2/5 w-5/6">
-                    <div className="text-2xl m-2 mt-5">Monthly Chart</div>
-                    <div><LineGraph data = {{
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-  datasets: [
-    {
-      label: 'Monthly Clicks',
-      data: [20, 33, 70, 81, 56, 55, 40],
-      fill: false,
-      borderColor: 'rgba(75,192,192,1)',
-      tension: 0.1,
-    },
-  ],
-}}
-      /></div>
-                </div>
+    fetchVisitedHistory();
+  }, [shortid, activeTab]);
 
-                <div className="sm:w-4/12 w-1/2">
-                    <div className="text-2xl m-2 mt-5">Referrals</div>
-                    <div><PieGraph data = {{
-        labels: ['LinkedIn', 'Insta', 'Facebook', 'Website', 'Others'],
-        datasets: [
-          {
-            label: 'Referrals',
-            data: [12, 19, 7, 9, 4],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
-            ],
-            borderWidth: 1,
-          },
-        ],
-      }}
-      /></div>
+  return (
+    <div className="bg-black text-white pb-2 min-h-screen">
+      <Navbar />
 
-                </div>
-            </div>
+      <div className="text-4xl ml-4 flex justify-center">ANALYTICS</div>
 
+      <div className=" justify-around my-4 flex flex-col items-center gap-5 sm:flex-row">
+        
+      </div>
 
-
-
-
-
-
-           
-           
-            
-            
+      <div className="flex flex-col sm:flex-row justify-evenly gap-5 items-center">
+        <div className="bg-blue-800 justify-center flex-col text-center p-3 text-2xl w-56 border-2 rounded">
+          <div>Total Clicks</div>
+          <div>{totalClicks}</div>
         </div>
-    )
-}
+        <div className="sm:w-2/5 w-5/6">
+
+
+          <div className="flex">
+            <button
+              className={`${activeTab === "5min" ? "border-b-2 border-white" : ""
+                } px-4 mx-2`}
+              onClick={() => setActiveTab("5min")}
+            >
+              5 min
+            </button>
+            <button
+              className={`${activeTab === "hour" ? "border-b-2 border-white" : ""
+                } px-4 mx-2`}
+              onClick={() => setActiveTab("hour")}
+            >
+              1 hour
+            </button>
+            <button
+              className={`${activeTab === "day" ? "border-b-2 border-white" : ""
+                } px-4 mx-2`}
+              onClick={() => setActiveTab("day")}
+            >
+              1 day
+            </button>
+
+            {/* Add more buttons for other time intervals */}
+          </div>
+          <div>
+            <LineGraph
+              data={{
+                labels: labels,
+                datasets: [
+                  {
+                    label: `Clicks per ${activeTab}`,
+                    data: data,
+                    fill: false,
+                    borderColor: "rgba(75,192,192,1)",
+                    tension: 0.1,
+                  },
+                ],
+              }}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default Analytics;

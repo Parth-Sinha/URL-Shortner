@@ -16,8 +16,8 @@ function App() {
         <Route path='/login' element={<UserLogin/>} />
         <Route element = {<PrivateRoutes />} >
           <Route path='/workspace' element={<Workspace />} />
-          <Route path='/analytics' element={<Analytics />}/>
         </Route>
+        <Route path='/analytics/:shortid' element={<Analytics />}/>
         <Route path='/premium' element={<PremiumComp />} />
       </Routes>
     </BrowserRouter>
