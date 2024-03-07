@@ -62,8 +62,11 @@ const get_click_short_url =  async(req, res)=>{
     }})
     console.log(foundUrl)
     if(foundUrl){
-
-        const redirectTo = "https://" + foundUrl.redirectedUrl
+        let redirectTo = "https://" + foundUrl.redirectedUrl;
+        if(foundUrl.redirectedUrl.slice(0, 5)=="https"){
+            redirectTo = foundUrl.redirectedUrl
+        }
+        
         return res.redirect(302, redirectTo)
     }
     // Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
