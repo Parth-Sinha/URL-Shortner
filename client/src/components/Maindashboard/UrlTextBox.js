@@ -53,7 +53,8 @@ function UrlTextBox({
     }
 
     const handleShortenClick = () => {
-        setUrl(url) = removeHttpsPrefix(url)
+        const updatedurl = removeHttpsPrefix(url)
+        setUrl(updatedurl);
         const newUrl = {
             redirectedUrl: url,
             personId: PID
