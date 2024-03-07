@@ -42,19 +42,8 @@ function UrlTextBox({
         };
         fun();
     }, [accessToken, url])
-    function removeHttpsPrefix(url) {
-        // Define regular expression pattern to match "https://"
-        var pattern = /^https:\/\//;
-        
-        // Use replace() to remove "https://" prefix if it exists
-        var cleanedUrl = url.replace(pattern, '');
-        
-        return cleanedUrl;
-    }
-
+    
     const handleShortenClick = () => {
-        const updatedurl = removeHttpsPrefix(url)
-        setUrl(updatedurl);
         const newUrl = {
             redirectedUrl: url,
             personId: PID
